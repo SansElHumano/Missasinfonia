@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Missasinfonía Runner</title>
+<style>
+  body {
+    background-color: #111;
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    overflow: hidden;
+  }
+  #gameArea {
+    position: relative;
+    width: 800px;
+    height: 200px;
+    margin: 50px auto;
+    background-color: #222;
+    border: 3px solid red;
+    overflow: hidden;
+  }
+  #missa {
+    position: absolute;
+    bottom: 0;
+    left: 50px;
+    width: 50px;
+  }
+  .obstacle {
+    position: absolute;
+    bottom: 0;
+    width: 30px;
+    height: 50px;
+    background-color: red;
+    right: 0;
+  }
+</style>
+</head>
+<body>
+<h1>Missasinfonía Runner 🏃‍♂️</h1>
+<p>Presiona la barra espaciadora para saltar</p>
+
+<div id="gameArea">
+  <img id="missa" src="https://pm1.aminoapps.com/7088/43701449e7027934e529b9ee7694bfca3aea05c7r1-375-667v2_hq.jpg" alt="Missa">
+</div>
+
+<script>
+const missa = document.getElementById("missa");
+const gameArea = document.getElementById("gameArea");
+let jumping = false;
+let position = 0;
+
+function jump() {
+  if (jumping) return;
+  jumping = true;
+  let upInterval = setInterval(() => {
+    if (position >= 100) {
+      clearInterval(upInterval);
+      let downInterval = setInterval(() => {
+        if (position <= 0) {
+          clearInterval(downInterval);
+          jumping = false;
+        }
+        position -= 5;
+        missa.style.bottom = position + "px";
+      }, 20);
+    }
+    position += 5;
+    missa.style.bottom = position + "px";
+  }, 20);
+}
+
+document.addEventListener("keydown", e => {
+  if (e.code === "Space") {
+    jump();
+  }
+});
+
+// Obstáculos
+function createObstacle() {
+  const obstacle = document.createElement("div");
+  obstacle.classList.add("obstacle");
+  gameArea.appendChild(obstacle);
+  let obstaclePosition = 800;
+  obstacle.style.right = obstaclePosition + "px";
+
+  let moveInterval = setInterval(() => {
+    if (obstaclePosition > 850) {
+      gameArea.removeChild(obstacle);
+      clearInterval(moveInterval);
+    } else {
+      obstaclePosition +=  -10;
+      obstacle.style.left = obstaclePosition + "px";
+
+      // Colisión
+      if (obstaclePosition < 100 && obstaclePosition > 50 && position < 50) {
+        alert("¡Chocaste con un obstáculo! Fin del juego 😢");
+        location.reload();
+      }
+    }
+  }, 20);
+}
+
+// Crear obstáculos cada 2.5 segundos
+setInterval(createObstacle, 2500);
+</script>
+</body>
+</html>

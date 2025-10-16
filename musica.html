@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Música de Missasinfonia</title>
+<style>
+  body {
+    background: linear-gradient(180deg, #000000 0%, #1a1a1a 100%);
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+    text-align: center;
+    margin: 0;
+    padding-top: 80px;
+  }
+
+  /* Barra superior */
+  .navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #111;
+    display: flex;
+    justify-content: center;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  }
+  .navbar a {
+    color: white;
+    padding: 14px 20px;
+    text-decoration: none;
+    text-align: center;
+    font-weight: bold;
+    transition: 0.3s;
+  }
+  .navbar a:hover {
+    background-color: #ff3b3b;
+    color: black;
+  }
+  .navbar a.active {
+    background-color: #ff3b3b;
+  }
+
+  /* Contenedor del reproductor */
+  .playlist-container {
+    position: relative;
+    display: inline-block;
+    margin-top: 20px;
+  }
+
+  iframe {
+    width: 90vw;
+    max-width: 900px;
+    height: 500px;
+    border: none;
+    border-radius: 10px;
+  }
+
+  /* Flecha y texto */
+  .indicator {
+    position: absolute;
+    top: 63px;    /* más abajo */
+    right: -105px; /* más a la derecha */
+    text-align: left;
+    color: #ff3b3b;
+    font-weight: bold;
+    z-index: 10;
+    width: 160px;
+    opacity: 1;
+    transition: opacity 1s ease;
+    cursor: pointer;
+  }
+
+  .indicator:hover {
+    opacity: 0; /* desaparece al pasar el mouse */
+  }
+
+  .arrow {
+    display: inline-block;
+    font-size: 2em;
+    color: #ff3b3b;
+    animation: bounce 1s infinite alternate;
+    transform: rotate(-45deg);
+    margin-right: 5px;
+  }
+
+  @keyframes bounce {
+    from { transform: rotate(-45deg) translateY(0); }
+    to { transform: rotate(-45deg) translateY(-6px); }
+  }
+
+  .arrow-text {
+    font-size: 0.9em;
+    display: block;
+    margin-top: 5px;
+    width: 140px;
+  }
+</style>
+</head>
+<body>
+
+<div class="navbar">
+  <a href="index.html">Inicio</a>
+  <a href="videos.html">Videos</a>
+  <a href="musica.html" class="active">Música</a>
+  <a href="historia.html">historia</a>
+</div>
+
+<h1>🎶 Música de Missasinfonia 🎶</h1>
+<p>Escucha sus canciones y cambia la música desde la lista 🎧</p>
+
+<div class="playlist-container">
+  <iframe src="https://www.youtube.com/embed/videoseries?list=PL53742F46D67E1127"
+          allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+  <!-- Flecha flotante -->
+  <div class="indicator" id="indicator">
+    <div class="arrow">⬈</div>
+    <div class="arrow-text">Ahí puedes cambiar la música 🎵</div>
+  </div>
+</div>
+
+<script>
+  // Desaparece automáticamente después de 6 segundos
+  setTimeout(() => {
+    const indicator = document.getElementById('indicator');
+    indicator.style.opacity = '0';
+  }, 6000);
+</script>
+
+</body>
+</html>
